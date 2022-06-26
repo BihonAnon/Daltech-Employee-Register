@@ -1,9 +1,6 @@
 {
   "dependencies": {
-    "inquirer": "^9.0.0",
-    "jest": "^28.1.1"
-  },
-  "scripts": {
-    "test": "jest"
+    "inquirer": "^6.5.2",
+    "jist": "^1.0.6"
   }
 }
