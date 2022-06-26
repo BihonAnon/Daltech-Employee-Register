@@ -1,6 +1,19 @@
 {
+  "name": "team-profile",
+  "version": "1.0.0",
+  "description": "## Your Task",
+  "main": "index.js",
+  "directories": {
+      "lib": "lib"
+  },
+  "scripts": {
+      "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "inquirer": "^6.5.2",
-    "jist": "^1.0.6"
+      "inquirer": "^8.2.4",
+      "jest": "^28.1.1"
   }
 }

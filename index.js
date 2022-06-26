@@ -26,7 +26,7 @@ THEN I exit the application, and the HTML is generated
 // Include packages needed for this application
 const fs = require("fs");
 const inquirer = require("inquirer");
-const jist = require("jist");
+// const jist = require("jist");
 
 //Lib Requires
 const Employee = require("./lib/Employee");
@@ -41,9 +41,8 @@ const teamMenu = [
     name: "teammenu",
     message: "Build your team!",
     choices: ["Engineer", "Intern", "DONE"],
-  }
-]
-
+  },
+];
 
 const engineerQuestions = [
   {
@@ -105,7 +104,7 @@ const engineerQuestions = [
         return false;
       }
     },
-  }
+  },
 ];
 const managerQuestions = [
   {
@@ -167,7 +166,7 @@ const managerQuestions = [
         return false;
       }
     },
-  }
+  },
 ];
 const internQuestions = [
   {
@@ -229,30 +228,79 @@ const internQuestions = [
         return false;
       }
     },
-  }
+  },
 ];
 var employeeList = [];
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
   fs.writeFile(fileName, data, (err) => {
-    if (err)
-        throw err;
-    console.log('Success! Information transferred to the README!')
-});
+    if (err) throw err;
+    console.log("Success! Information transferred to the README!");
+  });
 }
-
+//Text Based Input Functions ( cuz they overlap otherwise )
+function createManager() {
+  inquirer.prompt(managerQuestions).then(userInput => {
+    newManager = new Manager(
+      userInput.name,
+      userInput.id,
+      userInput.email,
+      userInput.office
+    );
+    employeeList.push(newManager);
+    // console.log(employeeList);
+  });
+}
+function createIntern() {
+  inquirer.prompt(internQuestions).then(userInput => {
+    newIntern = new Intern(
+      userInput.name,
+      userInput.id,
+      userInput.email,
+      userInput.School
+    );
+    employeeList.push(newIntern);
+  });
+}
+function createEngineer() {
+  inquirer.prompt(internQuestions).then(userInput => {
+    employeeList.push(
+      new Engineer(
+        userInput.name,
+        userInput.id,
+        userInput.email,
+        userInput.School
+      )
+    );
+  });
+}
+function generateHTML(){
+  console.log("PENISLAND")
+}
 // TODO: Create a function to initialize app
 function init() {
-  inquirer.prompt(managerQuestions)
-  .then(function(userInput) {
-    employeeList.push(new Manager(userInput.name, userInput.id, userInput.email, userInput.office));
-  })
-    // //May need variable then push variable
-    // employeeList.push(new Employee(userInput.name, userInput.id, userInput.Email));
-    // console.log(userInput)
-    //   writeToFile("README.md", generateMarkdown(userInput));
-  }
+  
+  createManager();
+  createIntern();
+  // inquirer.prompt(teamMenu).then(userInput => {
+  //   switch(userInput.teammenu) {
+  //     case 'Engineer':
+  //       createEngineer();
+  //       break;
+  //     case 'Intern':
+  //       createIntern();
+  //       break;
+  //     case 'Done':
+  //       generateHTML();
+  //   }
+  // })
+
+  // //May need variable then push variable
+  // employeeList.push(new Employee(userInput.name, userInput.id, userInput.Email));
+  // console.log(userInput)
+  //   writeToFile("README.md", generateMarkdown(userInput));
+}
 
 // Function call to initialize app *when you are ceating your object*
 init();
