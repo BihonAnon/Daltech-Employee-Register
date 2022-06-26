@@ -26,7 +26,7 @@ THEN I exit the application, and the HTML is generated
 // Include packages needed for this application
 const fs = require("fs");
 const inquirer = require("inquirer");
-// const jist = require("jist");
+const renderTeamCards = require('./src/html-template.js');
 
 //Lib Requires
 const Employee = require("./lib/Employee");
@@ -36,201 +36,11 @@ const Manager = require("./lib/Manager");
 
 // CONSTANTS DECLARATION
 
-const teamMenu = [
-  {
-    type: "list",
-    name: "teammenu",
-    message: "Build your team!",
-    choices: ["Engineer", "Intern", "DONE"],
-  },
-];
 
-const engineerQuestions = [
-  {
-    //name
-    type: "input",
-    name: "name",
-    message: "What is the employees name:",
-    validate: (nameInput) => {
-      if (nameInput) {
-        return true;
-      } else {
-        console.log("dont leave your employees unnamed!? (err: add name)");
-        return false;
-      }
-    },
-  },
-  {
-    //ID
-    type: "input",
-    name: "id",
-    message: "What is the employees ID:",
-    validate: (idInput) => {
-      if (idInput) {
-        return true;
-      } else {
-        console.log(
-          "dont leave your employees without an idenfier!? (err: add id)"
-        );
-        return false;
-      }
-    },
-  },
-  {
-    //Email
-    type: "input",
-    name: "email",
-    message: "What is the employees email:",
-    validate: (nameInput) => {
-      if (nameInput) {
-        return true;
-      } else {
-        console.log(
-          "dont leave your employees without communication means!? (err: add email)"
-        );
-        return false;
-      }
-    },
-  },
-  {
-    //GitHub
-    type: "input",
-    name: "Github",
-    message: "What is the engineers Github:",
-    validate: (nameInput) => {
-      if (nameInput) {
-        return true;
-      } else {
-        console.log("dont leave your Engineer's Github!? (err: add github)");
-        return false;
-      }
-    },
-  },
-];
-const managerQuestions = [
-  {
-    //name
-    type: "input",
-    name: "name",
-    message: "What is the Managers name:",
-    validate: (nameInput) => {
-      if (nameInput) {
-        return true;
-      } else {
-        console.log("dont leave your employees unnamed!? (err: add name)");
-        return false;
-      }
-    },
-  },
-  {
-    //ID
-    type: "input",
-    name: "id",
-    message: "What is the Managers ID:",
-    validate: (idInput) => {
-      if (idInput) {
-        return true;
-      } else {
-        console.log(
-          "dont leave your employees without an idenfier!? (err: add id)"
-        );
-        return false;
-      }
-    },
-  },
-  {
-    //Email
-    type: "input",
-    name: "email",
-    message: "What is the Managers email:",
-    validate: (emailInput) => {
-      if (emailInput) {
-        return true;
-      } else {
-        console.log(
-          "dont leave your employees without communication means!? (err: add email)"
-        );
-        return false;
-      }
-    },
-  },
-  {
-    //office
-    type: "input",
-    name: "office",
-    message: "What is the managers office:",
-    validate: (officeInput) => {
-      if (officeInput) {
-        return true;
-      } else {
-        console.log("no office? (err: add office)");
-        return false;
-      }
-    },
-  },
-];
-const internQuestions = [
-  {
-    //name
-    type: "input",
-    name: "name",
-    message: "What is the Intern name:",
-    validate: (nameInput) => {
-      if (nameInput) {
-        return true;
-      } else {
-        console.log("dont leave your Intern unnamed!? (err: add name)");
-        return false;
-      }
-    },
-  },
-  {
-    //ID
-    type: "input",
-    name: "id",
-    message: "What is the Intern ID:",
-    validate: (idInput) => {
-      if (idInput) {
-        return true;
-      } else {
-        console.log(
-          "dont leave your employees without an idenfier!? (err: add id)"
-        );
-        return false;
-      }
-    },
-  },
-  {
-    //Email
-    type: "input",
-    name: "email",
-    message: "What is the Intern email:",
-    validate: (nameInput) => {
-      if (nameInput) {
-        return true;
-      } else {
-        console.log(
-          "dont leave your employees without communication means!? (err: add email)"
-        );
-        return false;
-      }
-    },
-  },
-  {
-    //School
-    type: "input",
-    name: "School",
-    message: "What is the engineers Github:",
-    validate: (schoolInput) => {
-      if (schoolInput) {
-        return true;
-      } else {
-        console.log("dont leave your Interns schoolless!? (err: add school)");
-        return false;
-      }
-    },
-  },
-];
+
+
+
+
 var employeeList = [];
 
 // TODO: Create a function to write README file
@@ -241,21 +51,91 @@ function writeToFile(fileName, data) {
   });
 }
 function addEmployees() {
+  const teamMenu = [
+    {
+      type: "list",
+      name: "erusandi",
+      message: "Build your team!",
+      choices: ['Engineer', 'Intern', 'DONE'],
+    },
+  ];
   inquirer.prompt(teamMenu).then(userInput => {
-    switch(teamMenu.teammenu ){
+    switch (userInput.erusandi) {
       case 'Engineer':
         createEngineer();
         break;
       case 'Intern':
         createIntern();
         break;
-      default:
+      case 'DONE':
         generateHTML();
     }
   })
 }
 //Text Based Input Functions ( cuz they overlap otherwise )
 const createManager = () => {
+  const managerQuestions = [
+    {
+      //name
+      type: "input",
+      name: "name",
+      message: "What is the Managers name:",
+      validate: (nameInput) => {
+        if (nameInput) {
+          return true;
+        } else {
+          console.log("dont leave your employees unnamed!? (err: add name)");
+          return false;
+        }
+      },
+    },
+    {
+      //ID
+      type: "input",
+      name: "id",
+      message: "What is the Managers ID:",
+      validate: (idInput) => {
+        if (idInput) {
+          return true;
+        } else {
+          console.log(
+            "dont leave your employees without an idenfier!? (err: add id)"
+          );
+          return false;
+        }
+      },
+    },
+    {
+      //Email
+      type: "input",
+      name: "email",
+      message: "What is the Managers email:",
+      validate: (emailInput) => {
+        if (emailInput) {
+          return true;
+        } else {
+          console.log(
+            "dont leave your employees without communication means!? (err: add email)"
+          );
+          return false;
+        }
+      },
+    },
+    {
+      //office
+      type: "input",
+      name: "office",
+      message: "What is the managers office:",
+      validate: (officeInput) => {
+        if (officeInput) {
+          return true;
+        } else {
+          console.log("no office? (err: add office)");
+          return false;
+        }
+      },
+    },
+  ];
   inquirer.prompt(managerQuestions).then(userInput => {
     newManager = new Manager(
       userInput.name,
@@ -264,11 +144,73 @@ const createManager = () => {
       userInput.office
     );
     employeeList.push(newManager);
-    // console.log(employeeList);
+    console.log(employeeList);
+    addEmployees();
   });
-  addEmployees();
 }
 const createIntern = () => {
+  const internQuestions = [
+    {
+      //name
+      type: "input",
+      name: "name",
+      message: "What is the Intern name:",
+      validate: (nameInput) => {
+        if (nameInput) {
+          return true;
+        } else {
+          console.log("dont leave your Intern unnamed!? (err: add name)");
+          return false;
+        }
+      },
+    },
+    {
+      //ID
+      type: "input",
+      name: "id",
+      message: "What is the Intern ID:",
+      validate: (idInput) => {
+        if (idInput) {
+          return true;
+        } else {
+          console.log(
+            "dont leave your employees without an idenfier!? (err: add id)"
+          );
+          return false;
+        }
+      },
+    },
+    {
+      //Email
+      type: "input",
+      name: "email",
+      message: "What is the Intern email:",
+      validate: (nameInput) => {
+        if (nameInput) {
+          return true;
+        } else {
+          console.log(
+            "dont leave your employees without communication means!? (err: add email)"
+          );
+          return false;
+        }
+      },
+    },
+    {
+      //School
+      type: "input",
+      name: "School",
+      message: "What is the engineers Github:",
+      validate: (schoolInput) => {
+        if (schoolInput) {
+          return true;
+        } else {
+          console.log("dont leave your Interns schoolless!? (err: add school)");
+          return false;
+        }
+      },
+    },
+  ];
   inquirer.prompt(internQuestions).then(userInput => {
     newIntern = new Intern(
       userInput.name,
@@ -277,11 +219,73 @@ const createIntern = () => {
       userInput.School
     );
     employeeList.push(newIntern);
+    addEmployees();
   });
-  addEmployees();
 }
 const createEngineer = () => {
-  inquirer.prompt(internQuestions).then(userInput => {
+  const engineerQuestions = [
+    {
+      //name
+      type: "input",
+      name: "name",
+      message: "What is the employees name:",
+      validate: (nameInput) => {
+        if (nameInput) {
+          return true;
+        } else {
+          console.log("dont leave your employees unnamed!? (err: add name)");
+          return false;
+        }
+      },
+    },
+    {
+      //ID
+      type: "input",
+      name: "id",
+      message: "What is the employees ID:",
+      validate: (idInput) => {
+        if (idInput) {
+          return true;
+        } else {
+          console.log(
+            "dont leave your employees without an idenfier!? (err: add id)"
+          );
+          return false;
+        }
+      },
+    },
+    {
+      //Email
+      type: "input",
+      name: "email",
+      message: "What is the employees email:",
+      validate: (nameInput) => {
+        if (nameInput) {
+          return true;
+        } else {
+          console.log(
+            "dont leave your employees without communication means!? (err: add email)"
+          );
+          return false;
+        }
+      },
+    },
+    {
+      //GitHub
+      type: "input",
+      name: "Github",
+      message: "What is the engineers Github:",
+      validate: (nameInput) => {
+        if (nameInput) {
+          return true;
+        } else {
+          console.log("dont leave your Engineer's Github!? (err: add github)");
+          return false;
+        }
+      },
+    },
+  ];
+  inquirer.prompt(engineerQuestions).then(userInput => {
     employeeList.push(
       newEngineer = new Engineer(
         userInput.name,
@@ -290,34 +294,23 @@ const createEngineer = () => {
         userInput.Github
       )
     );
-    employeeList.push(newEngineer);
+    addEmployees();
   });
-  addEmployees();
 }
 function generateHTML(){
-  console.log("PENISLAND")
+  console.log(employeeList);
+  fs.writeFile("./dist/index.html", renderTeamCards(employeeList)), (err, log_stack) => {
+    if (err)
+      console.log(err);
+    else {
+      console.log("successfully generated HTML")
+    }
+  }
 }
 // TODO: Create a function to initialize app
 function init() {
   
   createManager();
-  // inquirer.prompt(teamMenu).then(userInput => {
-  //   switch(userInput.teammenu) {
-  //     case 'Engineer':
-  //       createEngineer();
-  //       break;
-  //     case 'Intern':
-  //       createIntern();
-  //       break;
-  //     case 'Done':
-  //       generateHTML();
-  //   }
-  // })
-
-  // //May need variable then push variable
-  // employeeList.push(new Employee(userInput.name, userInput.id, userInput.Email));
-  // console.log(userInput)
-  //   writeToFile("README.md", generateMarkdown(userInput));
 }
 
 // Function call to initialize app *when you are ceating your object*
