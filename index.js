@@ -144,7 +144,7 @@ const createManager = () => {
       userInput.office
     );
     employeeList.push(newManager);
-    console.log(employeeList);
+    // console.log(employeeList);
     addEmployees();
   });
 }
@@ -200,7 +200,7 @@ const createIntern = () => {
       //School
       type: "input",
       name: "School",
-      message: "What is the engineers Github:",
+      message: "What is the engineers School:",
       validate: (schoolInput) => {
         if (schoolInput) {
           return true;
