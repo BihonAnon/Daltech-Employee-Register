@@ -35,6 +35,7 @@ const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
 // CONSTANTS DECLARATION
+
 const teamMenu = [
   {
     type: "list",
@@ -239,8 +240,22 @@ function writeToFile(fileName, data) {
     console.log("Success! Information transferred to the README!");
   });
 }
+function addEmployees() {
+  inquirer.prompt(teamMenu).then(userInput => {
+    switch(teamMenu.teammenu ){
+      case 'Engineer':
+        createEngineer();
+        break;
+      case 'Intern':
+        createIntern();
+        break;
+      default:
+        generateHTML();
+    }
+  })
+}
 //Text Based Input Functions ( cuz they overlap otherwise )
-function createManager() {
+const createManager = () => {
   inquirer.prompt(managerQuestions).then(userInput => {
     newManager = new Manager(
       userInput.name,
@@ -251,8 +266,9 @@ function createManager() {
     employeeList.push(newManager);
     // console.log(employeeList);
   });
+  addEmployees();
 }
-function createIntern() {
+const createIntern = () => {
   inquirer.prompt(internQuestions).then(userInput => {
     newIntern = new Intern(
       userInput.name,
@@ -262,18 +278,21 @@ function createIntern() {
     );
     employeeList.push(newIntern);
   });
+  addEmployees();
 }
-function createEngineer() {
+const createEngineer = () => {
   inquirer.prompt(internQuestions).then(userInput => {
     employeeList.push(
-      new Engineer(
+      newEngineer = new Engineer(
         userInput.name,
         userInput.id,
         userInput.email,
-        userInput.School
+        userInput.Github
       )
     );
+    employeeList.push(newEngineer);
   });
+  addEmployees();
 }
 function generateHTML(){
   console.log("PENISLAND")
@@ -282,7 +301,6 @@ function generateHTML(){
 function init() {
   
   createManager();
-  createIntern();
   // inquirer.prompt(teamMenu).then(userInput => {
   //   switch(userInput.teammenu) {
   //     case 'Engineer':
